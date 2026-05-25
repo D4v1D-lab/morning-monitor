@@ -26,19 +26,22 @@ def print_tickets_summary(response):
     data = response.json()
     issues = data.get("issues", [])
 
-    print(f"\n📋 Total de tickets: {len(issues)}\n")
+    print(f"\n📋 Total tickets: {len(issues)}\n")
 
-    for issue in issues:
-        key = issue["key"]
-        fields = issue["fields"]
-        summary = fields["summary"]
-        status = fields["status"]["name"]
-        priority = fields["priority"]["name"] if fields["priority"] else "Sin prioridad"
-        created = fields["created"][:10]
+    if len(issues) == 0:
+        print("No tickets assigned to you so far today")
+    else:
+        for issue in issues:
+            key = issue["key"]
+            fields = issue["fields"]
+            summary = fields["summary"]
+            status = fields["status"]["name"]
+            priority = fields["priority"]["name"] if fields["priority"] else "No priority"
+            created = fields["created"][:10]
 
-        print(f"🎫 {key} | {status} | {priority} | {created}")
-        print(f"   {summary}")
-        print()
+            print(f"🎫 {key} | {status} | {priority} | {created}")
+            print(f"   {summary}")
+            print()
 
 
 if __name__ == "__main__":
