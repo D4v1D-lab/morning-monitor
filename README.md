@@ -5,7 +5,7 @@
 ![Python](https://img.shields.io/badge/Python-3.14-blue?style=flat-square&logo=python)
 ![Jira](https://img.shields.io/badge/Jira-REST%20API%20v3-0052CC?style=flat-square&logo=jira)
 ![pytest](https://img.shields.io/badge/pytest-passing-green?style=flat-square&logo=pytest)
-![Status](https://img.shields.io/badge/status-in%20progress-orange?style=flat-square)
+![Status](https://img.shields.io/badge/status-complete-brightgreen?style=flat-square)
 
 ---
 
@@ -17,8 +17,8 @@
 | ✅ | Automated email reports via Gmail | Done |
 | ✅ | Unit tests with mocks — 9 scenarios | Done |
 | ✅ | Secure credential management via `.env` | Done |
-| 🚧 | Scheduled execution via cronjob | In progress |
-| 🚧 | Real-time new ticket detection | In progress |
+| ✅ | Scheduled execution via scheduler | Done |
+| ✅ | Real-time new ticket detection | Done |
 
 ---
 
@@ -29,6 +29,7 @@
 | Python 3.14 | Core language |
 | Jira REST API v3 | Ticket data source |
 | smtplib | Email automation |
+| schedule | Task scheduling |
 | pytest + unittest.mock | Automated testing |
 | python-dotenv | Secure credential management |
 
@@ -74,6 +75,9 @@ python jira_client.py
 # Send email report
 python email_notifier.py
 
+# Start scheduled monitoring (daily report + real-time new ticket detection)
+python scheduler.py
+
 # Run automated tests
 pytest tests/ -v
 ```
@@ -101,8 +105,8 @@ pytest tests/ -v
 - [x] Jira API integration
 - [x] Automated email notifications
 - [x] Unit tests with mocks
-- [ ] Scheduled execution via cronjob
-- [ ] Real-time new ticket detection
+- [x] Scheduled execution via scheduler
+- [x] Real-time new ticket detection
 
 ---
 
