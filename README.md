@@ -15,7 +15,7 @@
 |---|---|---|
 | ✅ | Jira REST API integration | Done |
 | ✅ | Automated email reports via Gmail | Done |
-| ✅ | Unit tests with mocks — 6 scenarios | Done |
+| ✅ | Unit tests with mocks — 9 scenarios | Done |
 | ✅ | Secure credential management via `.env` | Done |
 | 🚧 | Scheduled execution via cronjob | In progress |
 | 🚧 | Real-time new ticket detection | In progress |
@@ -90,6 +90,9 @@ pytest tests/ -v
 | `test_get_my_tickets_returns_500` | Handles internal server error | ✅ PASS |
 | `test_get_my_tickets_returns_error` | Handles no internet connection | ✅ PASS |
 | `test_no_tickets_shows_empty_message` | Validates empty state message | ✅ PASS |
+| `test_send_ticket_summary_success` | Validates successful email send | ✅ PASS |
+| `test_send_ticket_summary_auth_error` | Handles SMTP authentication failure | ✅ PASS |
+| `test_send_ticket_summary_connection_error` | Handles SMTP connection failure | ✅ PASS |
 
 ---
 
@@ -109,4 +112,4 @@ pytest tests/ -v
 QA Automation Engineer
 
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-0077B5?style=flat-square&logo=linkedin)](https://www.linkedin.com/in/YOUR_LINKEDIN)
-[![GitHub](https://img.shields.io/badge/GitHub-Follow-181717?style=flat-square&logo=github)](https://github.com/YOUR_USERNAME)
+[![GitHub](https://img.shields.io/badge/GitHub-Follow-181717?style=flat-square&logo=github)](https://github.com/YOUR_USERNAME)  
