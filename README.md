@@ -39,7 +39,7 @@
 
 ### 1. Clone the repository
 ```bash
-git clone https://github.com/YOUR_USERNAME/morning-monitor.git
+git clone https://github.com/D4v1D-lab/morning-monitor.git
 cd morning-monitor
 ```
 
