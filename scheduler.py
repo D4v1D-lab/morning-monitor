@@ -37,10 +37,11 @@ def check_new_tickets():
         send_ticket_summary(text)
         known_ticket_ids = current_ids
 
-schedule.every().day.at("08:00").do(daily_report)
-schedule.every(1).minutes.do(check_new_tickets)
+if __name__ == "__main__":
+    schedule.every().day.at("08:00").do(daily_report)
+    schedule.every(1).minutes.do(check_new_tickets)
 
-print("Scheduler running...")
-while True:
-    schedule.run_pending()
-    time.sleep(30)
+    print("Scheduler running...")
+    while True:
+        schedule.run_pending()
+        time.sleep(30)

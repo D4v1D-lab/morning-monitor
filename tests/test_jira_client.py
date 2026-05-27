@@ -4,6 +4,7 @@ import pytest
 from unittest.mock import patch, Mock
 from jira_client import get_my_tickets, print_tickets_summary
 from email_notifier import send_ticket_summary
+import scheduler
 
 
 def test_get_my_tickets_returns_200():
@@ -93,3 +94,97 @@ def test_send_ticket_summary_connection_error():
 
         with pytest.raises(smtplib.SMTPConnectError):
             send_ticket_summary("Test summary")
+
+
+def test_daily_report_sends_email():
+    with patch("scheduler.get_my_tickets") as mock_get, \
+         patch("scheduler.send_ticket_summary") as mock_send:
+
+        mock_response = Mock()
+        mock_response.json.return_value = {
+            "issues": [
+                {
+                    "id": "10001", "key": "PROJ-1",
+                    "fields": {
+                        "summary": "Test", "status": {"name": "To Do"},
+                        "priority": {"name": "Medium"}, "created": "2026-05-27T10:00:00"
+                    }
+                }
+            ]
+        }
+        mock_get.return_value = mock_response
+
+        scheduler.daily_report()
+
+        mock_send.assert_called_once()
+
+
+def test_check_new_tickets_first_run():
+    with patch("scheduler.get_my_tickets") as mock_get, \
+         patch("scheduler.send_ticket_summary") as mock_send:
+
+        mock_response = Mock()
+        mock_response.json.return_value = {
+            "issues": [
+                {
+                    "id": "10001", "key": "PROJ-1",
+                    "fields": {
+                        "summary": "Test", "status": {"name": "To Do"},
+                        "priority": {"name": "Medium"}, "created": "2026-05-27T10:00:00"
+                    }
+                },
+                {
+                    "id": "10002", "key": "PROJ-2",
+                    "fields": {
+                        "summary": "Test 2", "status": {"name": "Done"},
+                        "priority": {"name": "High"}, "created": "2026-05-27T11:00:00"
+                    }
+                }
+            ]
+        }
+        mock_get.return_value = mock_response
+
+        scheduler.known_ticket_ids = set()
+        scheduler.check_new_tickets()
+
+        mock_send.assert_not_called()
+        assert scheduler.known_ticket_ids == {"10001", "10002"}
+
+
+def test_check_new_tickets_detects_new():
+    with patch("scheduler.get_my_tickets") as mock_get, \
+         patch("scheduler.send_ticket_summary") as mock_send:
+
+        mock_response = Mock()
+        mock_response.json.return_value = {
+            "issues": [
+                {
+                    "id": "10001", "key": "PROJ-1",
+                    "fields": {
+                        "summary": "Test", "status": {"name": "To Do"},
+                        "priority": {"name": "Medium"}, "created": "2026-05-27T10:00:00"
+                    }
+                },
+                {
+                    "id": "10002", "key": "PROJ-2",
+                    "fields": {
+                        "summary": "Test 2", "status": {"name": "Done"},
+                        "priority": {"name": "High"}, "created": "2026-05-27T11:00:00"
+                    }
+                },
+                {
+                    "id": "10003", "key": "PROJ-3",
+                    "fields": {
+                        "summary": "New Ticket", "status": {"name": "Open"},
+                        "priority": {"name": "Low"}, "created": "2026-05-27T12:00:00"
+                    }
+                }
+            ]
+        }
+        mock_get.return_value = mock_response
+
+        scheduler.known_ticket_ids = {"10001", "10002"}
+        scheduler.check_new_tickets()
+
+        mock_send.assert_called_once()
+        assert scheduler.known_ticket_ids == {"10001", "10002", "10003"}

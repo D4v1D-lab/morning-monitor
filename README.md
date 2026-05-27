@@ -15,7 +15,7 @@
 |---|---|---|
 | ✅ | Jira REST API integration | Done |
 | ✅ | Automated email reports via Gmail | Done |
-| ✅ | Unit tests with mocks — 9 scenarios | Done |
+| ✅ | Unit tests with mocks — 12 scenarios | Done |
 | ✅ | Secure credential management via `.env` | Done |
 | ✅ | Scheduled execution via scheduler | Done |
 | ✅ | Real-time new ticket detection | Done |
@@ -97,6 +97,9 @@ pytest tests/ -v
 | `test_send_ticket_summary_success` | Validates successful email send | ✅ PASS |
 | `test_send_ticket_summary_auth_error` | Handles SMTP authentication failure | ✅ PASS |
 | `test_send_ticket_summary_connection_error` | Handles SMTP connection failure | ✅ PASS |
+| `test_daily_report_sends_email` | Validates daily report triggers email | ✅ PASS |
+| `test_check_new_tickets_first_run` | Initializes tracking without sending email | ✅ PASS |
+| `test_check_new_tickets_detects_new` | Detects and notifies on new tickets | ✅ PASS |
 
 ---
 
@@ -113,7 +116,8 @@ pytest tests/ -v
 ## 👨‍💻 Author
 
 **David Patricio Martínez Hinojosa**
-QA Automation Engineer
 
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-0077B5?style=flat-square&logo=linkedin)](https://www.linkedin.com/in/YOUR_LINKEDIN)
-[![GitHub](https://img.shields.io/badge/GitHub-Follow-181717?style=flat-square&logo=github)](https://github.com/YOUR_USERNAME)  
+Computer Information Technology Engineer
+
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-0077B5?style=flat-square&logo=linkedin)](https://www.linkedin.com/in/martinezdavid4)
+[![GitHub](https://img.shields.io/badge/GitHub-Follow-181717?style=flat-square&logo=github)](https://github.com/D4v1D-lab)  
