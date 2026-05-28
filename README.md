@@ -47,8 +47,16 @@ cd morning-monitor
 ### 2. Create and activate virtual environment
 ```bash
 python -m venv venv
-venv\Scripts\activate
 ```
+
+- **Windows:**
+  ```bash
+  venv\Scripts\activate
+  ```
+- **Linux / macOS:**
+  ```bash
+  source venv/bin/activate
+  ```
 
 ### 3. Install dependencies
 ```bash
