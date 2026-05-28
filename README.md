@@ -19,6 +19,7 @@
 | ✅ | Secure credential management via `.env` | Done |
 | ✅ | Scheduled execution via scheduler | Done |
 | ✅ | Real-time new ticket detection | Done |
+| ✅ | Interactive launcher menu | Done |
 
 ---
 
@@ -80,6 +81,9 @@ python scheduler.py
 
 # Run automated tests
 pytest tests/ -v
+
+# Launch interactive menu
+python launcher.py
 ```
 
 ---
@@ -110,6 +114,7 @@ pytest tests/ -v
 - [x] Unit tests with mocks
 - [x] Scheduled execution via scheduler
 - [x] Real-time new ticket detection
+- [x] Interactive launcher menu
 
 ---
 
