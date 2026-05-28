@@ -3,7 +3,7 @@ import subprocess
 import sys
 from pathlib import Path
 
-PROJECT_DIR = Path(__file__).resolve().parent
+PROJECT_DIR = Path(__file__).resolve().parent.parent
 
 
 def print_menu():
@@ -42,30 +42,30 @@ def main():
 
         match choice:
             case "1":
-                run([sys.executable, "jira_client.py"])
+                run([sys.executable, "-m", "src.jira_client"])
             case "2":
-                run([sys.executable, "email_notifier.py"])
+                run([sys.executable, "-m", "src.email_notifier"])
             case "3":
                 print()
                 print("╔══════════════════════════════════════════╗")
-                print("║   ⏰ Scheduler                           ║")
+                print("║   \u23f0 Scheduler                           \u2551")
                 print("╠══════════════════════════════════════════╣")
-                print("║  This will start the scheduler in your   ║")
-                print("║  terminal and run forever. You will NOT  ║")
-                print("║  see the launcher menu while it runs.    ║")
-                print("║                                          ║")
-                print("║  To stop the scheduler and return to     ║")
-                print("║  the launcher menu, press Ctrl+C.        ║")
-                print("║                                          ║")
-                print("║  Continue? (y/n):                        ║")
+                print("║  This will start the scheduler in your   \u2551")
+                print("║  terminal and run forever. You will NOT  \u2551")
+                print("║  see the launcher menu while it runs.    \u2551")
+                print("║                                          \u2551")
+                print("║  To stop the scheduler and return to     \u2551")
+                print("║  the launcher menu, press Ctrl+C.        \u2551")
+                print("║                                          \u2551")
+                print("║  Continue? (y/n):                        \u2551")
                 print("╚══════════════════════════════════════════╝")
                 if input().strip().lower() == "y":
-                    run([sys.executable, "scheduler.py"])
+                    run([sys.executable, "-m", "src.scheduler"])
             case "4":
                 run([sys.executable, "-m", "pytest", "tests/", "-v"])
             case "5":
-                run([sys.executable, "jira_client.py"])
-                run([sys.executable, "email_notifier.py"])
+                run([sys.executable, "-m", "src.jira_client"])
+                run([sys.executable, "-m", "src.email_notifier"])
                 run([sys.executable, "-m", "pytest", "tests/", "-v"])
             case "q":
                 print("\nGoodbye!")

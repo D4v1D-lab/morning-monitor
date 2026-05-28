@@ -67,23 +67,54 @@ EMAIL_RECEIVER=your.receiver@gmail.com
 
 ---
 
+## 🏗️ Project Layout
+
+```
+morning-monitor/
+├── src/                          # Application source package
+│   ├── __init__.py
+│   ├── config.py                 # Environment & credential loading
+│   ├── jira_client.py            # Jira REST API v3 integration
+│   ├── email_notifier.py         # Gmail SMTP email automation
+│   ├── scheduler.py              # Recurring task scheduling + new ticket detection
+│   └── launcher.py               # Interactive CLI menu
+├── tests/                        # Test suite
+│   ├── __init__.py
+│   └── test_jira_client.py       # 12 mocked test scenarios
+├── .env                          # Local credentials (gitignored)
+├── requirements.txt
+└── README.md
+```
+
+**Module responsibilities:**
+
+| Module | Role |
+|--------|------|
+| `config.py` | Reads Jira & email credentials from `.env` via `python-dotenv` |
+| `jira_client.py` | Queries Jira REST API v3 for tickets assigned to current user |
+| `email_notifier.py` | Formats and sends ticket summaries via Gmail SMTP |
+| `scheduler.py` | Runs daily report at 8:00 AM + polls every minute for new tickets |
+| `launcher.py` | Interactive menu to run any component |
+
+---
+
 ## ▶️ How to Run
 
 ```bash
 # Get your Jira tickets summary
-python jira_client.py
+python -m src.jira_client
 
 # Send email report
-python email_notifier.py
+python -m src.email_notifier
 
 # Start scheduled monitoring (daily report + real-time new ticket detection)
-python scheduler.py
+python -m src.scheduler
 
 # Run automated tests
 pytest tests/ -v
 
 # Launch interactive menu
-python launcher.py
+python -m src.launcher
 ```
 
 ---

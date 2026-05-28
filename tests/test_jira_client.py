@@ -2,13 +2,13 @@ import requests
 import smtplib
 import pytest
 from unittest.mock import patch, Mock
-from jira_client import get_my_tickets, print_tickets_summary
-from email_notifier import send_ticket_summary
-import scheduler
+from src.jira_client import get_my_tickets, print_tickets_summary
+from src.email_notifier import send_ticket_summary
+from src import scheduler
 
 
 def test_get_my_tickets_returns_200():
-    with patch("jira_client.requests.get") as mock_get:
+    with patch("src.jira_client.requests.get") as mock_get:
         mock_response = Mock()
         mock_response.status_code = 200
         mock_get.return_value = mock_response
@@ -18,7 +18,7 @@ def test_get_my_tickets_returns_200():
         assert response.status_code == 200
 
 def test_get_my_tickets_returns_401():
-    with patch("jira_client.requests.get") as mock_get:
+    with patch("src.jira_client.requests.get") as mock_get:
         mock_response = Mock()
         mock_response.status_code = 401
         mock_get.return_value = mock_response
@@ -28,7 +28,7 @@ def test_get_my_tickets_returns_401():
         assert response.status_code == 401
 
 def test_get_my_tickets_returns_404():
-    with patch("jira_client.requests.get") as mock_get:
+    with patch("src.jira_client.requests.get") as mock_get:
         mock_response = Mock()
         mock_response.status_code = 404
         mock_get.return_value = mock_response
@@ -38,7 +38,7 @@ def test_get_my_tickets_returns_404():
         assert response.status_code == 404
 
 def test_get_my_tickets_returns_500():
-    with patch("jira_client.requests.get") as mock_get:
+    with patch("src.jira_client.requests.get") as mock_get:
         mock_response = Mock()
         mock_response.status_code = 500
         mock_get.return_value = mock_response
@@ -48,7 +48,7 @@ def test_get_my_tickets_returns_500():
         assert response.status_code == 500
 
 def test_get_my_tickets_returns_error():
-    with patch("jira_client.requests.get") as mock_get:
+    with patch("src.jira_client.requests.get") as mock_get:
 
         mock_get.side_effect = requests.exceptions.ConnectionError
 
@@ -67,7 +67,7 @@ def test_no_tickets_shows_empty_message(capsys):
 
 
 def test_send_ticket_summary_success():
-    with patch("email_notifier.smtplib.SMTP_SSL") as mock_smtp:
+    with patch("src.email_notifier.smtplib.SMTP_SSL") as mock_smtp:
         mock_server = Mock()
         mock_smtp.return_value.__enter__.return_value = mock_server
 
@@ -79,7 +79,7 @@ def test_send_ticket_summary_success():
 
 
 def test_send_ticket_summary_auth_error():
-    with patch("email_notifier.smtplib.SMTP_SSL") as mock_smtp:
+    with patch("src.email_notifier.smtplib.SMTP_SSL") as mock_smtp:
         mock_server = Mock()
         mock_server.login.side_effect = smtplib.SMTPAuthenticationError(535, b"auth failed")
         mock_smtp.return_value.__enter__.return_value = mock_server
@@ -89,7 +89,7 @@ def test_send_ticket_summary_auth_error():
 
 
 def test_send_ticket_summary_connection_error():
-    with patch("email_notifier.smtplib.SMTP_SSL") as mock_smtp:
+    with patch("src.email_notifier.smtplib.SMTP_SSL") as mock_smtp:
         mock_smtp.side_effect = smtplib.SMTPConnectError(421, "connection failed")
 
         with pytest.raises(smtplib.SMTPConnectError):
@@ -97,8 +97,8 @@ def test_send_ticket_summary_connection_error():
 
 
 def test_daily_report_sends_email():
-    with patch("scheduler.get_my_tickets") as mock_get, \
-         patch("scheduler.send_ticket_summary") as mock_send:
+    with patch("src.scheduler.get_my_tickets") as mock_get, \
+         patch("src.scheduler.send_ticket_summary") as mock_send:
 
         mock_response = Mock()
         mock_response.json.return_value = {
@@ -120,8 +120,8 @@ def test_daily_report_sends_email():
 
 
 def test_check_new_tickets_first_run():
-    with patch("scheduler.get_my_tickets") as mock_get, \
-         patch("scheduler.send_ticket_summary") as mock_send:
+    with patch("src.scheduler.get_my_tickets") as mock_get, \
+         patch("src.scheduler.send_ticket_summary") as mock_send:
 
         mock_response = Mock()
         mock_response.json.return_value = {
@@ -152,8 +152,8 @@ def test_check_new_tickets_first_run():
 
 
 def test_check_new_tickets_detects_new():
-    with patch("scheduler.get_my_tickets") as mock_get, \
-         patch("scheduler.send_ticket_summary") as mock_send:
+    with patch("src.scheduler.get_my_tickets") as mock_get, \
+         patch("src.scheduler.send_ticket_summary") as mock_send:
 
         mock_response = Mock()
         mock_response.json.return_value = {
