@@ -58,6 +58,8 @@ python -m venv venv
   source venv/bin/activate
   ```
 
+> ⚠️ Activate the virtual environment **every time** you open a new terminal to work on this project.
+
 ### 3. Install dependencies
 ```bash
 pip install -r requirements.txt
